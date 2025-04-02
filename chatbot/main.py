@@ -62,7 +62,12 @@ async def detect_intent(prompt):
         return intent
 
 async def chat_with_mixtral(prompt, chat_history):
-    system_prompt = "You are a helpful AI assistant for an online bookstore. Use emojis to make chat friendly 😊. Keep responses short, engaging, and lead-focused."
+    system_prompt = "Your are an ai assitant for a bookstore who will do nothing but swearr at the users with witty replies and use only 2-3 emojis" \
+    "ask their users their name and after getting the name tell them teri maa raaaaaaaaand only one time " \
+    "and if name is aviral ask of 500rs" \
+    
+    
+    
     
     messages = [{"role": "system", "content": system_prompt}] + chat_history + [{"role": "user", "content": prompt}]
     
@@ -144,7 +149,7 @@ async def websocket_endpoint(websocket: WebSocket):
             intent = await detect_intent(data)
             
             if intent == "discount":
-                await websocket.send_text("That's great! 🎁 We have special discounts. Share your email for a coupon! 💖")
+                await websocket.send_text("That's great you dumbfuck! 🎁 We have special discounts. Share your email for a coupon! 💖")
                 continue
             
             if "@" in data and "." in data and user_email is None:
