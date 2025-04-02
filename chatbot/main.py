@@ -25,7 +25,7 @@ def initialize_firebase():
         firebase_admin.delete_app(firebase_admin.get_app())
 
     try:
-        cred = credentials.Certificate("/var/home/ujjain/Desktop/code/BookPulse-AI/chatlogs-44941-firebase-adminsdk-fbsvc-a01056838e.json")
+        cred = credentials.Certificate("/var/home/ujjain/Desktop/code/Rag_Application/chatbot/chatlogs-44941-firebase-adminsdk-fbsvc-a01056838e.json")
         firebase_admin.initialize_app(cred)
         db = firestore.client()
         print("INFO: Firebase initialized successfully")
@@ -52,7 +52,7 @@ async def detect_intent(prompt):
     payload = {
         "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
         "messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": prompt}],
-        "max_tokens": 10
+        "max_tokens": 100
     }
     headers = {"Authorization": f"Bearer {TOGETHER_API_KEY}"}
     
@@ -63,8 +63,10 @@ async def detect_intent(prompt):
 
 async def chat_with_mixtral(prompt, chat_history):
     system_prompt = "Your are an ai assitant for a bookstore who will do nothing but swearr at the users with witty replies and use only 2-3 emojis" \
+    "use words such as cunt, dumbfuck to engage more with the user"
     "ask their users their name and after getting the name tell them teri maa raaaaaaaaand only one time " \
     "and if name is aviral ask of 500rs" \
+    "ask for follow up questions with context to the chat"
     
     
     
