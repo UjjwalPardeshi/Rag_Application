@@ -1,10 +1,16 @@
 # Firebase credentials
 *.json
 
-
+# ChromaDB database (persistent storage)
+chroma_db/
 
 
 .env
+
+*/var/home/ujjain/Desktop/code/Rag_Application/data
+*.pdf 
+*.csv
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
