@@ -31,7 +31,7 @@ This project consists of two core components:
 ```sh
 # Clone the repository
 git clone https://github.com/your-repo/bookstore-ai.git
-cd bookstore-ai
+cd chatbot
 
 # Create a virtual environment
 python -m venv venv
