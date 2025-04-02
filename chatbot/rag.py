@@ -27,7 +27,6 @@ embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-Mi
 vector_store = Chroma(persist_directory="./chroma_db", embedding_function=embedding_model)
 
 # Function to load and store PDF in vector database
-@app.post("/upload_pdf/")
 def load_and_store_pdf(pdf_path: str):
     try:
         loader = PyPDFLoader(pdf_path)
@@ -41,9 +40,20 @@ def load_and_store_pdf(pdf_path: str):
 
         vector_store.add_texts(texts, metadatas=metadata)
         vector_store.persist()
-        return {"message": f"✅ PDF {pdf_path} loaded into ChromaDB."}
+        print(f"✅ PDF {pdf_path} loaded into ChromaDB.")
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"❌ Error loading {pdf_path}: {e}")
+
+# Load all PDFs from the "pdfs/" folder at startup
+@app.on_event("startup")
+def load_pdfs_on_startup():
+    pdf_folder = "/var/home/ujjain/Desktop/code/Rag_Application/data"
+    if not os.path.exists(pdf_folder):
+        os.makedirs(pdf_folder)  # Create folder if it doesn't exist
+    pdf_files = [f for f in os.listdir(pdf_folder) if f.endswith(".pdf")]
+    
+    for pdf in pdf_files:
+        load_and_store_pdf(os.path.join(pdf_folder, pdf))
 
 # Query function using Llama 3 via Together API
 async def query_rag(question: str):
@@ -52,7 +62,7 @@ async def query_rag(question: str):
 
     context = "\n\n".join([doc.page_content for doc in docs])
 
-    system_prompt = "You are an AI assistant using a RAG system. Answer questions based on the given context."
+    system_prompt = "You are an AI assistant using a RAG system. Answer questions based on the given context, give me all the answers in points "
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": f"Context: {context}\n\nQuestion: {question}"}
@@ -76,4 +86,3 @@ async def query_api(question: str):
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
