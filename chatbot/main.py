@@ -11,6 +11,8 @@ import random
 import string
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from firebase_admin import credentials, firestore
+import firebase_admin
 
 # Load environment variables from .env file
 load_dotenv()
@@ -21,18 +23,27 @@ nlp = spacy.load("en_core_web_sm")
 # Firebase Initialization
 def initialize_firebase():
     global db
+
     if firebase_admin._apps:
         firebase_admin.delete_app(firebase_admin.get_app())
 
     try:
-        cred = credentials.Certificate("/var/home/ujjain/Desktop/code/Rag_Application/chatbot/chatlogs-44941-firebase-adminsdk-fbsvc-a01056838e.json")
+        firebase_cred_path = os.getenv("FIREBASE_CREDENTIALS_PATH")
+        if not firebase_cred_path or not os.path.exists(firebase_cred_path):
+            raise FileNotFoundError(f"Firebase credentials not found at: {firebase_cred_path}")
+
+        print(f"INFO: Using Firebase credentials from: {firebase_cred_path}")
+
+        cred = credentials.Certificate(firebase_cred_path)
         firebase_admin.initialize_app(cred)
         db = firestore.client()
         print("INFO: Firebase initialized successfully")
+
     except Exception as e:
         print(f"ERROR: Firebase initialization failed: {e}")
 
 initialize_firebase()
+
 
 # API Keys
 TOGETHER_API_KEY = os.getenv("TOGETHER_API_KEY")
