@@ -62,5 +62,3 @@ docker run -p 8000:8000 --env-file .env bookstore-chatbot
 ```
 
 ---
-
-Let me know if you want the RAG part or advanced usage added too.
