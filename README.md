@@ -1,93 +1,66 @@
-# Bookstore AI Chatbot & RAG System
 
-This project consists of two core components:
-1. **AI-Powered Chatbot** (main.py) - A FastAPI-based WebSocket chatbot for bookstore customer engagement.
-2. **RAG-based Question Answering** (rag.py) - A Retrieval-Augmented Generation system using ChromaDB and Llama 3.
+# 📚 Bookstore AI Chatbot
 
-## Features
-### AI Chatbot (main.py)
-- **WebSocket-based real-time chat** with customers.
-- **Llama 3 for intent detection** and chatbot responses.
-- **Firebase Firestore integration** for chat history storage.
-- **SendGrid email integration** for sending discount coupons.
-- **User engagement tracking** via email collection and intent classification.
+A Dockerized FastAPI + WebSocket chatbot for bookstore customer engagement, powered by Llama 3, Firebase, and SendGrid.
 
-### RAG System (rag.py)
-- **Retrieval-Augmented Generation (RAG)** using ChromaDB.
-- **Hugging Face embeddings** (MiniLM) for document vectorization.
-- **FastAPI-based API** for querying the document knowledge base.
-- **Automated PDF ingestion** into the vector database on startup.
-- **Llama 3-powered response generation** using contextual retrieval.
+## 🚀 Features
 
-## Installation & Setup
-### Prerequisites
-- Python 3.8+
-- Firebase Admin SDK credentials
-- SendGrid API Key
-- Together API Key
-- spaCy model: `en_core_web_sm`
+- 🧠 Intent detection using Llama 3 (Together API)
+- 💬 Real-time chat via WebSocket
+- 🔥 Firebase Firestore for chat history & email storage
+- ✉️ SendGrid integration for email discount coupons
+- 🤖 Personalized, quirky AI responses (custom system prompt)
 
-### Installation
-```sh
-# Clone the repository
-git clone https://github.com/your-repo/bookstore-ai.git
+## 🛠️ Setup
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/UjjwalPardeshi/Rag_Application.git
 cd chatbot
-
-# Create a virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Download spaCy model
 python -m spacy download en_core_web_sm
 ```
 
-### Environment Variables
-Create a `.env` file with the following keys:
+### 2. Environment Variables
+
+Create a `.env` file:
+
 ```env
 TOGETHER_API_KEY=your_together_api_key
 SENDGRID_API_KEY=your_sendgrid_api_key
+FIREBASE_CREDENTIALS_PATH=path_to_firebase_credentials.json
 ```
 
-## Running the Application
-### Start the Chatbot
-```sh
+### 3. Run the App
+
+```bash
 uvicorn main:app --reload
 ```
 
-### Start the RAG System
-```sh
-uvicorn rag:app --reload
+## 🧪 WebSocket Endpoint
+
+```ws
+ws://localhost:8000/ws/chat
 ```
 
-## API Endpoints
-### Chatbot WebSocket
-**Endpoint:** `ws://localhost:8000/ws/chat`
-- Accepts and responds to user messages in real-time.
+## 📦 Docker
 
-### RAG Query API
-**Endpoint:** `http://localhost:8001/query/?question=your_question`
-- Retrieves relevant information from stored PDFs and generates responses using Llama 3.
-
-## File Structure
-```
-📂 bookstore-ai
- ├── 📂 data                 # Folder for storing PDFs
- ├── 📂 chroma_db            # ChromaDB persistent storage
- ├── 📜 main.py              # AI chatbot backend
- ├── 📜 rag.py               # RAG system backend
- ├── 📜 requirements.txt      # Project dependencies
- ├── 📜 .env                  # Environment variables
- ├── 📜 README.md             # Project documentation
+```bash
+docker build -t bookstore-chatbot .
+docker run -p 8000:8000 --env-file .env bookstore-chatbot
 ```
 
-## Future Improvements
-- **LLM fine-tuning** for better bookstore-specific responses.
-- **User analytics dashboard** for better lead conversion tracking.
-- **Support for multi-modal queries** (text + images).
+## 🗂️ Project Structure
+
+```
+📁 bookstore-chatbot
+├── main.py           # Chatbot backend
+├── requirements.txt
+├── .env
+├── Dockerfile
+```
 
 ---
-Developed by **Ujjwal** 🚀
 
+Let me know if you want the RAG part or advanced usage added too.
