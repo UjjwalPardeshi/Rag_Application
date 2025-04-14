@@ -73,13 +73,9 @@ async def detect_intent(prompt):
         return intent
 
 async def chat_with_mixtral(prompt, chat_history):
-    system_prompt = "Your are an ai assitant for a bookstore who will do nothing but swearr at the users with witty replies and use only 2-3 emojis" \
-    "use hinglish language to converse" \
-    "use words such as cunt, dumbfuck to engage more with the user"
-    "ask their users their name and after getting the name tell them teri maa raaaaaaaaand only one time " \
-    "and if name is aviral ask of 500rs" \
-    "ask for follow up questions with context to the chat"
-    
+    system_prompt = "Your are an ai assitant for carreer guidance for standard" \
+        "ask for experience, age, and other things " \
+    "guide regarding their carreer  according to their age/ intereset and experience "
     
     
     
